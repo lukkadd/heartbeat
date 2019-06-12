@@ -1,0 +1,4 @@
+Preproc:
+	1- tiramos as instancias unlabeled 
+	2- removemos os arquivos relacionados aquelas instancias
+	
