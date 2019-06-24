@@ -8,8 +8,10 @@ df = pd.read_csv('pre-set_b.csv')
 X = []
 Y = []
 for i in range (0,20):
-    print(df.iloc[i][3])
+    Y.append(df.iloc[i][3])
+    X.append( plt.imread('./'+ df.iloc[i][2]))
 
+print(X[0],Y[0])
 
 
 
