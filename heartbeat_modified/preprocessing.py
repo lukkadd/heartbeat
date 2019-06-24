@@ -2,10 +2,13 @@ import pandas as pd
 import librosa as lb
 import librosa.display as lbd
 import matplotlib.pyplot as plt
+from sklearn import preprocessing   
 
 df = pd.read_csv("set_b.csv")
 df = df.drop("sublabel", axis=1)
 df = df.replace(["extrastole", "murmur"], "abnormal")
+le = preprocessing.LabelEncoder()
+df['label'] = le.fit_transform(df['label'])
 for index, row in df.iterrows():
     row[1] = row[1].replace('Btraining_','')
 
