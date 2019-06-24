@@ -3,6 +3,7 @@ import librosa.display
 import os, fnmatch
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib
 
 def load_audio_mfccs(folder, file_names, duration=12, sr=16000):
     data = []
@@ -41,20 +42,24 @@ def load_audio(folder, file_names, duration=12, sr=16000):
 
 def gen_waveplot(data, path):
     for i in range(0,len(data)):
-        plt.figure(figsize=(10, 5))
+        fig = plt.figure(figsize=(10, 5))
+        ax = fig.add_subplot(111)
+        ax.set_title("Audio signal")
+        ax.set_ylabel("Amplitude")
         librosa.display.waveplot(data[i][1],sr=data[i][2],x_axis='time')
-        plt.title("Audio signal amplitude")
         plt.savefig(path+data[i][0].replace('.wav','.jpg'))
         plt.close()
 
 def gen_spectograms(data, path):
     for i in range(0,len(data)):
-        plt.figure(figsize=(10, 5))
+        fig = plt.figure(figsize=(10, 5))
+        ax = fig.add_subplot(111)
         X = librosa.stft(data[i][1])
         Xb = librosa.amplitude_to_db(abs(X))
         librosa.display.specshow(Xb,sr=data[i][2],x_axis='time',y_axis='hz')
         plt.ylim(0,2000)
-        plt.title("Spectrogram")
+        ax.set_title("Spectrogram")
+        ax.set_ylabel("Frequency")
         plt.savefig("./spectograms/"+data[i][0].replace('.wav','.jpg'))
         plt.close()
 
