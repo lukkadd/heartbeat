@@ -52,6 +52,7 @@ def gen_spectograms(data, path):
         X = librosa.stft(data[i][1])
         Xb = librosa.amplitude_to_db(abs(X))
         librosa.display.specshow(Xb,sr=data[i][2],x_axis='time',y_axis='hz')
+        plt.ylim(0,2000)
         plt.savefig("./spectograms/"+data[i][0].replace('.wav','.jpg'))
         plt.close()
 
