@@ -1,32 +1,15 @@
 import pandas as pd
-import librosa as lb
-import librosa.display as lbd
-import matplotlib.pyplot as plt
 from sklearn import preprocessing   
 
 df = pd.read_csv("set_b.csv")
 df = df.drop("sublabel", axis=1)
 df = df.replace(["extrastole", "murmur"], "abnormal")
 for index, row in df.iterrows():
-    row['fname'] = row['fname'].replace('Btraining_','')
+    row['fname'] = row['fname'].replace('set_b/Btraining_','')
+    row['fname'] = row['fname'].replace('extrastole_','extrastole__')
+    row['fname'] = row['fname'].replace('murmur_','murmur__')
+    row['fname'] = row['fname'].replace('normal_','normal__')
 le = preprocessing.LabelEncoder()
 df['label'] = le.fit_transform(df['label'])
 
-
 df.to_csv("pre-set_b.csv")
-
-# y, sr = lb.load("./set_b/extrastole__127_1306764300147_C2.wav")
-
-# plt.figure(figsize=(10, 5))
-# lbd.waveplot(y,sr=sr,x_axis='time')
-# plt.title("Waveplot")
-# plt.show()
-
-# X = lb.stft(y)
-# Xdb = lb.amplitude_to_db(abs(X))
-# plt.figure(figsize=(12, 5))
-# lbd.specshow(Xdb, sr=sr ,x_axis='time', y_axis='hz')
-# plt.ylim(0,2000)
-# plt.title("Spectrogram")
-# plt.colorbar()
-# plt.show()

@@ -5,23 +5,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib
 
-def load_audio_mfccs(folder, file_names, duration=12, sr=16000):
-    data = []
-    for file_name in file_names:
-        try:
-            sound_file=folder+file_name
-            print ("load file ",sound_file)
-            # use kaiser_fast technique for faster extraction
-            X, sr = librosa.load( sound_file, res_type='kaiser_fast') 
-            dur = librosa.get_duration(y=X, sr=sr)
-            # extract normalized mfcc feature from data
-            mfccs = np.mean(librosa.feature.mfcc(y=X, sr=sr, n_mfcc=40).T,axis=0)
-        except Exception as e:
-            print("Error encountered while parsing file: ", file)
-        feature = np.array(mfccs).reshape([-1,1])
-        data.append(feature)
-    return data
-
 def load_audio(folder, file_names, duration=12, sr=16000):
     data = []
     i = 0
@@ -34,8 +17,8 @@ def load_audio(folder, file_names, duration=12, sr=16000):
             dur = librosa.get_duration(y=X, sr=sr)
             data.append([file_name,X,sr])
             i = i + 1
-            if(i == 20):
-                return data
+            # if(i == 20):
+            #     return data
         except Exception as e:
             print("Error encountered while parsing file: ", file_name)
     return data
@@ -60,7 +43,7 @@ def gen_spectograms(data, path):
         plt.ylim(0,2000)
         ax.set_title("Spectrogram")
         ax.set_ylabel("Frequency")
-        plt.savefig("./spectograms/"+data[i][0].replace('.wav','.jpg'))
+        plt.savefig("./spectograms/"+data[i][0].replace('.wav','.jpg'),dpi=80)
         plt.close()
 
   
