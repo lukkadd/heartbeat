@@ -43,6 +43,7 @@ def gen_waveplot(data, path):
     for i in range(0,len(data)):
         plt.figure(figsize=(10, 5))
         librosa.display.waveplot(data[i][1],sr=data[i][2],x_axis='time')
+        plt.title("Audio signal amplitude")
         plt.savefig(path+data[i][0].replace('.wav','.jpg'))
         plt.close()
 
@@ -53,11 +54,12 @@ def gen_spectograms(data, path):
         Xb = librosa.amplitude_to_db(abs(X))
         librosa.display.specshow(Xb,sr=data[i][2],x_axis='time',y_axis='hz')
         plt.ylim(0,2000)
+        plt.title("Spectrogram")
         plt.savefig("./spectograms/"+data[i][0].replace('.wav','.jpg'))
         plt.close()
 
   
-# ************************* MAIN PROGRAM ********************************
+# ************************* MAIN PROGRAM *************************
 
 AUDIO_DIR = './set_b/'
 

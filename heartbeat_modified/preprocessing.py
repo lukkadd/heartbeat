@@ -1,7 +1,4 @@
 import pandas as pd
-import librosa as lb
-import librosa.display as lbd
-import matplotlib.pyplot as plt
 
 df = pd.read_csv("set_b.csv")
 df = df.drop("sublabel", axis=1)
