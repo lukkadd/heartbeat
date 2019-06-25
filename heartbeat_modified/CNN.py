@@ -1,4 +1,3 @@
-import keras
 from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D, Dropout, Flatten, Dense
 from keras.utils import to_categorical
@@ -16,41 +15,44 @@ for index, row in df.iterrows():
 
 x_train, x_test, y_train, y_test = train_test_split(X,Y,test_size=0.3,random_state=42)
 
-#reshaping images
+#Reshaping
 length = len(x_train)
 x_train = np.array(x_train)
-x_train = x_train.reshape(length,400,800,3)
+x_train = x_train.reshape(length,150,300,3)
 
 length = len(x_test)
 x_test = np.array(x_test)
-x_test = x_test.reshape(length,400,800,3)
+x_test = x_test.reshape(length,150,300,3)
 
-#categorical
+#Converting to categorical
 y_test = to_categorical(y_test)
 y_train = to_categorical(y_train)
 
 #Building model
 model = Sequential()
-model.add(Conv2D(64, kernel_size=(3, 3), activation='relu'))
-model.add(Conv2D(32, kernel_size=(3, 3), activation='relu', input_shape=(400,800,3)))
+model.add(Conv2D(64, kernel_size=(3, 3), activation='relu', input_shape=(150,300,3)))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Conv2D(32, kernel_size=(3, 3), activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.5))
 model.add(Flatten())
-model.add(Dense(10, activation='relu'))
+model.add(Dense(32, activation='relu'))
 model.add(Dropout(0.5))
 model.add(Dense(2, activation='softmax'))
 
 #Compiling model
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+
 print('******************************************************************************')
+
 #Training model
-model.fit(x_train, y_train, verbose=0, epochs=3)
+model.fit(x_train, y_train, verbose=0, epochs=10)
 
 model.summary()
 
-
 print('******************************************************************************')
-# #Testing model
+
+#Testing model
 y_train_pred = model.predict(x_train)
 y_test_pred = model.predict(x_test)
 

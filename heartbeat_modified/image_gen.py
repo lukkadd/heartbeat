@@ -1,9 +1,7 @@
 import librosa
 import librosa.display
 import os, fnmatch
-import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib
 
 def load_audio(folder, file_names, duration=12, sr=16000):
     data = []
@@ -17,8 +15,6 @@ def load_audio(folder, file_names, duration=12, sr=16000):
             dur = librosa.get_duration(y=X, sr=sr)
             data.append([file_name,X,sr])
             i = i + 1
-            # if(i == 20):
-            #     return data
         except Exception as e:
             print("Error encountered while parsing file: ", file_name)
     return data
@@ -43,7 +39,7 @@ def gen_spectograms(data, path):
         plt.ylim(0,2000)
         ax.set_title("Spectrogram")
         ax.set_ylabel("Frequency")
-        plt.savefig("./spectograms/"+data[i][0].replace('.wav','.jpg'),dpi=80)
+        plt.savefig("./spectograms/"+data[i][0].replace('.wav','.jpg'),dpi=30)
         plt.close()
 
   
